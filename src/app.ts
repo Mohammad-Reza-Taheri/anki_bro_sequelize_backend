@@ -68,18 +68,6 @@ import csvRoutes from "./routes/csv.route";
 
 const app = express();
 
-// Enable CORS with more control
-app.use(cors({
-  origin: "https://ankibro.liara.run",
-  credentials: true,
-  allowedHeaders: ["Authorization", "Content-Type"],
-  exposedHeaders: ["Authorization", "Content-Disposition"]
-}));
-
-// Ensure JSON parsing is applied before middleware
-app.use(express.json());
-app.use(express.urlencoded({ extended: true }));
-
 // **Custom Middleware for CORS Headers** (Handles OPTIONS requests explicitly)
 app.use((req:Request, res:Response, next:NextFunction) => {
   res.setHeader("Access-Control-Allow-Origin", "https://ankibro.liara.run");
@@ -93,6 +81,20 @@ app.use((req:Request, res:Response, next:NextFunction) => {
 
   next();
 });
+
+// Enable CORS with more control
+app.use(cors({
+  origin: "https://ankibro.liara.run",
+  credentials: true,
+  allowedHeaders: ["Authorization", "Content-Type"],
+  exposedHeaders: ["Authorization", "Content-Disposition"]
+}));
+
+// Ensure JSON parsing is applied before middleware
+app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
+
+
 
 // Routes
 app.use("/api/users/", userRoutes);
