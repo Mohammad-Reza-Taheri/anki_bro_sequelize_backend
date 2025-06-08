@@ -22,7 +22,8 @@ const app = express();
 // }));
 
 app.use(cors({
-  origin: "http://localhost:3001", // Keep your strict origin
+  // origin: "http://localhost:3001", // Keep your strict origin
+  origin: "https://ankibro.liara.run/", // Keep your strict origin
   credentials: true, // Maintain cookie support
   allowedHeaders: ["Authorization", "Content-Type"], // Existing headers
   exposedHeaders: ["Authorization", "Content-Disposition"] // Add Content-Disposition
