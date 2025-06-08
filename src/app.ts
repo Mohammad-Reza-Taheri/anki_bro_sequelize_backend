@@ -58,7 +58,7 @@
 // export default app;
 
 
-import express, { Request,Response,NextFunction } from "express";
+import express, { Request, Response, NextFunction } from "express";
 import cors from "cors";
 import userRoutes from "./routes/user2.route";
 import authRoutes from "./routes/auth.route";
@@ -68,27 +68,30 @@ import csvRoutes from "./routes/csv.route";
 
 const app = express();
 
-// **Custom Middleware for CORS Headers** (Handles OPTIONS requests explicitly)
-app.use((req:Request, res:Response, next:NextFunction) => {
-  res.setHeader("Access-Control-Allow-Origin", "https://ankibro.liara.run");
-  res.setHeader("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE, OPTIONS");
-  res.setHeader("Access-Control-Allow-Headers", "Content-Type, Authorization");
-
-  if (req.method === "OPTIONS") {
-    res.status(200).end(); // Ends preflight requests early
-    return 
-  }
-
-  next();
-});
-
 // Enable CORS with more control
 app.use(cors({
   origin: "https://ankibro.liara.run",
   credentials: true,
   allowedHeaders: ["Authorization", "Content-Type"],
+  methods: ["GET", "POST", "PUT", "DELETE"],
   exposedHeaders: ["Authorization", "Content-Disposition"]
 }));
+
+
+// **Custom Middleware for CORS Headers** (Handles OPTIONS requests explicitly)
+// app.use((req: Request, res: Response, next: NextFunction) => {
+//   res.setHeader("Access-Control-Allow-Origin", "https://ankibro.liara.run");
+//   res.setHeader("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE, OPTIONS");
+//   res.setHeader("Access-Control-Allow-Headers", "Content-Type, Authorization");
+
+//   if (req.method === "OPTIONS") {
+//     res.status(200).end(); // Ends preflight requests early
+//     return
+//   }
+
+//   next();
+// });
+
 
 // Ensure JSON parsing is applied before middleware
 app.use(express.json());
