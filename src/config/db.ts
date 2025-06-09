@@ -9,7 +9,7 @@ dotenv.config();
 //     process.env.DB_PASSWORD as string,
 //     {
 //         host: process.env.DB_HOST,
-//         dialect: 'postgres',
+//         dialect: 'mysql',
 //         port: parseInt(process.env.DB_PORT || '3306'),
 //         logging: false,
 //         pool: {
@@ -21,8 +21,8 @@ dotenv.config();
 //     }
 // );
 
-const sequelize = new Sequelize("postgresql://root:wHutKPz41bYzw1ez3Dh4hj1O@kind-goldstine-iu5auxikv-db:5432/postgres", {
-  dialect: "postgres",
+const sequelize = new Sequelize("mysql://root:ukctT6LzUXZsiZguamiAYYCq@tai.liara.cloud:34215/interesting_kare", {
+  dialect: "mysql",
   logging: false, // Optional: Disables logging
 });
 
