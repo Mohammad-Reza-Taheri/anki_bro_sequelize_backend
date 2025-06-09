@@ -21,7 +21,7 @@ dotenv.config();
 //     }
 // );
 
-const sequelize = new Sequelize("mysql://root:ukctT6LzUXZsiZguamiAYYCq@anki-bro-back:3306/interesting_kare", {
+const sequelize = new Sequelize("mysql://root:ukctT6LzUXZsiZguamiAYYCq@tai.liara.cloud:34215/interesting_kare", {
   dialect: "mysql",
   logging: false, // Optional: Disables logging
 });
