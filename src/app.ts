@@ -21,13 +21,26 @@ const app = express();
 //   exposedHeaders: ["Authorization"], // E
 // }));
 
-app.use(cors({
-  // origin: "http://localhost:3001", // Keep your strict origin
-  origin: "https://ankibro.liara.run/", // Keep your strict origin
-  credentials: true, // Maintain cookie support
-  allowedHeaders: ["Authorization", "Content-Type"], // Existing headers
-  exposedHeaders: ["Authorization", "Content-Disposition"] // Add Content-Disposition
-}));
+
+//last version
+// app.use(cors({
+//   // origin: "http://localhost:3001", // Keep your strict origin
+//   origin: "https://ankibro.liara.run/", // Keep your strict origin
+//   credentials: true, // Maintain cookie support
+//   allowedHeaders: ["Authorization", "Content-Type"], // Existing headers
+//   exposedHeaders: ["Authorization", "Content-Disposition"] // Add Content-Disposition
+// }));
+
+/////////////////////
+app.use((req, res, next) => {
+  res.header("Access-Control-Allow-Origin", "https://ankibro.liara.run");
+  res.header("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE, OPTIONS");
+  res.header("Access-Control-Allow-Headers", "Authorization, Content-Type");
+  res.header("Access-Control-Expose-Headers", "Authorization, Content-Disposition");
+  res.header("Access-Control-Allow-Credentials", "true");
+  next();
+});
+
 
 app.use(express.json());
 //for authentication
