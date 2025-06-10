@@ -73,7 +73,9 @@ import { downloadCors } from '../middlewares/downloadCors.middleware';
 import { authenticateToken } from '../middlewares/auth.middleware';
 
 const router = express.Router();
-const upload = multer({ dest: 'uploads/' }); // Temporary storage for uploaded files
+// const upload = multer({ dest: 'uploads/' }); // Temporary storage for uploaded files
+const upload = multer({ storage: multer.memoryStorage() });
+
 
 router.post('/import', authenticateToken, upload.single('file'), CSVController.importCSV);
 

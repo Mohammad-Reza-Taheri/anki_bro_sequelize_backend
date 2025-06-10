@@ -172,7 +172,7 @@ app.use(express.urlencoded({ extended: true }));
 
 // ==================== Routes ====================
 app.use('/api/users/', userRoutes);
-app.use('/api/csv', csvRoutes);
+app.use('/api/csv/', csvRoutes);
 app.use('/api/categories/', categoryRoutes);
 app.use('/api/cards/', cardRoutes);
 app.use("/api/auth/", authRoutes);

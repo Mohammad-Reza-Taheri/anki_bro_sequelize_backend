@@ -429,9 +429,11 @@ import { unlink } from 'fs/promises';
 import dayjs from 'dayjs';
 import { IImportAndExportCSV } from '../types/cardTypes';
 import CategoryService from './category.service';
+import { Readable } from 'stream';
+
 
 export class CSVImporter {
-    static async importCards(filePath: string, category_id: number, id: number): Promise<{ success: number, errors: number }> {
+    static async importCards(fileBuffer: Buffer, category_id: number, id: number): Promise<{ success: number, errors: number }> {
         const rawCardData: IImportAndExportCSV[] = []; // Store raw CSV rows
         const categoryMap = new Map<string, number>(); // Cache category IDs
         let errorCount = 0;
@@ -440,7 +442,8 @@ export class CSVImporter {
 
         try {
             // Read file with stream
-            const stream = createReadStream(filePath)
+            // const stream = createReadStream(filePath)
+            const stream = Readable.from(fileBuffer)
                 .pipe(csv())
                 .on('data', (data: IImportAndExportCSV) => {
                     console.log('CSV Row:', data);
@@ -570,15 +573,16 @@ export class CSVImporter {
 
         } catch (error) {
             console.error("Import process failed:", error);
-        } finally {
-            // Delete the uploaded file after processing
-            try {
-                await unlink(filePath);
-                console.log("Uploaded file deleted successfully.");
-            } catch (error) {
-                console.error("Error deleting file:", error);
-            }
         }
+        //  finally {
+        //     // Delete the uploaded file after processing
+        //     try {
+        //         await unlink(fileBuffer);
+        //         console.log("Uploaded file deleted successfully.");
+        //     } catch (error) {
+        //         console.error("Error deleting file:", error);
+        //     }
+        // }
 
         return { success: processedCards.length - errorCount, errors: errorCount }; // Now processedCards is correctly scoped
     }
