@@ -146,7 +146,7 @@ import csvRoutes from './routes/csv.route';
 import { syncDatabase } from './models';
 
 const app = express();
-const PORT = process.env.PORT || 4000; // Always use environment port for production
+const PORT = process.env.PORT ; // Always use environment port for production
 
 // ==================== CORS Configuration ====================
 const corsOptions = {
