@@ -1,4 +1,4 @@
-import Card from "../models/Card.model";
+import Card, { ICard } from "../models/Card.model";
 import { Op, Transaction } from 'sequelize'
 import { ICardStatusUpdate } from '../types/cardTypes';
 
@@ -7,7 +7,7 @@ class CardService {
         return await Card.create({ title, description, category_id, user_id })
     }
 
-    static async getCardsByCategory(category_id: number) {
+    static async getCardsByCategory(category_id: number, limit: number) {
         // let cards = await Card.findAll(
         //     {
         //         where: { category_id },
@@ -54,17 +54,118 @@ class CardService {
         //     cards.concat(cards_temp)
         // }
 
-        const cards = await Card.findAll(
-            {
+
+        //prev code
+        // const cards = await Card.findAll(
+        //     {
+        //         where: { category_id },
+        //         order: [
+        //             ["rate", "ASC"],
+        //             ["updatedAt", "ASC"],
+        //         ],
+        //         limit: limit,
+        //     }
+        // )
+
+
+        if (limit > 0) {
+            // let cards = [];
+            // let cards = await Card.findAll(
+            //     {
+            //         where: { category_id },
+            //         order: [
+            //             ["updatedAt", "DESC"],
+            //         ],
+            //         limit: limit / 2,
+            //     }
+            // )
+
+
+
+            // const cards_temp = await Card.findAll(
+            //     {
+            //         where: { category_id },
+            //         order: [
+            //             ["rate", "ASC"],
+            //             ["updatedAt", "ASC"],
+            //         ],
+            //         limit: limit / 2,
+            //     }
+            // )
+            // return cards.concat(cards_temp)
+
+            const cards = await Card.findAll({
+                where: { category_id },
+                order: [["updatedAt", "DESC"]],
+                limit: limit / 2,
+            });
+
+            const cards_temp = await Card.findAll({
                 where: { category_id },
                 order: [
                     ["rate", "ASC"],
                     ["updatedAt", "ASC"],
                 ],
-                limit: 8,
-            })
+                limit: limit / 2,
+            });
 
-        return cards
+            // Create a Set of existing card IDs
+            const existingIds = new Set(cards.map(card => card.card_id));
+
+            // Filter out duplicates from cards_temp
+            const filteredCardsTemp = cards_temp.filter(card => !existingIds.has(card.card_id));
+
+            // Combine unique results
+            return cards.concat(filteredCardsTemp);
+
+        } else {
+            // let cards = await Card.findAll(
+            //     {
+            //         where: { category_id },
+            //         order: [
+            //             ["updatedAt", "DESC"],
+            //         ]
+            //     }
+            // )
+            // const cards_temp = await Card.findAll(
+            //     {
+            //         where: { category_id },
+            //         order: [
+            //             ["rate", "ASC"],
+            //             ["updatedAt", "ASC"],
+            //         ]
+
+            //     }
+            // )
+            // return cards.concat(cards_temp)
+
+            ///////////////////////////////////////////////
+            // const cards = await Card.findAll({
+            //     where: { category_id },
+            //     order: [["updatedAt", "DESC"]],
+
+            // });
+
+            const cards = await Card.findAll({
+                where: { category_id },
+                order: [
+                    ["rate", "ASC"],
+                    ["updatedAt", "ASC"],
+                ],
+
+            });
+            return cards
+            // // Create a Set of existing card IDs
+            // const existingIds = new Set(cards.map(card => card.card_id));
+
+            // // Filter out duplicates from cards_temp
+            // const filteredCardsTemp = cards_temp.filter(card => !existingIds.has(card.card_id));
+
+            // // Combine unique results
+            // return cards.concat(filteredCardsTemp);
+        }
+
+
     }
 
     static async getAllCardsByUserId(user_id: number) {

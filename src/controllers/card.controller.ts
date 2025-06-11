@@ -26,7 +26,7 @@ class CardController {
 
     static async getCart(req: Request, res: Response) {
         try {
-            const cards = await CardService.getCardsByCategory(Number(req.params.category_id));
+            const cards = await CardService.getCardsByCategory(Number(req.params.category_id),Number(req.query.limit));
             res.json(cards)
         } catch (err) {
             res.json("error in card controller getCard" + err)

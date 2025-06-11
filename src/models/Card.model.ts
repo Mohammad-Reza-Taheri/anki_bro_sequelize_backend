@@ -30,7 +30,7 @@ class Card extends Model<ICard, ICreateCard> {
     // declare readonly category_id: number;
     // declare readonly user_id: number;
 
-    public cat_id!: number;
+    public card_id!: number;
     public title!: string;
     public description!: string;
     public rate!: number;
