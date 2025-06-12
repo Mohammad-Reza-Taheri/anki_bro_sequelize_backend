@@ -52,15 +52,15 @@ Card.init(
             primaryKey: true
         },
         title: {
-            type: DataTypes.STRING(50),
+            type: DataTypes.STRING(1000),
             allowNull: false,
-            validate: { notEmpty: true, len: [3, 50] },
+            validate: { notEmpty: true, len: [3, 1000] },
 
         },
         description: {
-            type: DataTypes.STRING(500),
+            type: DataTypes.STRING(1000),
             allowNull: false,
-            validate: { notEmpty: true, len: [3, 500] },
+            validate: { notEmpty: true, len: [3, 1000] },
 
         },
         rate:{
