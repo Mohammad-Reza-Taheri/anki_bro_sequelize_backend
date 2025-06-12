@@ -88,7 +88,7 @@ setupRelations();
 
 export async function syncDatabase() {
   try {
-    await sequelize.sync({ force: true });
+    await sequelize.sync({ alter: true });
     console.log('Database synced successfully');
   } catch (error) {
     console.error('Database sync failed:', error);
